@@ -1,29 +1,27 @@
 // import 'babel-polyfill'
 import React from 'react'
-import Header from '../components/Header'
+import { connect } from 'react-redux'
 import Search from '../components/Search'
 import Categories from '../components/Categories'
 import Carousel from '../components/Carousel'
 import CarouselItem from '../components/CarouselItem'
-import Footer from '../components/Footer'
-import useInitialState from '../hooks/useInitialState'
+// import useInitialState from '../hooks/useInitialState'
 
 import '../assets/styles/App.scss'
 
-const API = 'http://localhost:3000/initialState/'
+// const API = 'http://localhost:3000/initialState/'
 
-const App = () => {
-  const initialState = useInitialState(API)
+const Home = ({ myList, trends, originals }) => {
+  // const initialState = useInitialState(API)
   return (
     <div className='app'>
-      <Header />
-      <Search />
+      <Search isHome />
 
-      {initialState.mylist.length > 0 && (
+      {myList.length > 0 && (
         <Categories title='Mi lista'>
           <Carousel>
-            {initialState.mylist.map(video => (
-              <CarouselItem {...video} key={video.id} />
+            {myList.map(video => (
+              <CarouselItem {...video} key={video.id} isList />
             ))}
           </Carousel>
         </Categories>
@@ -31,7 +29,7 @@ const App = () => {
 
       <Categories title='Tendencias'>
         <Carousel>
-          {initialState.trends.map(video => (
+          {trends.map(video => (
             <CarouselItem {...video} key={video.id} />
           ))}
         </Carousel>
@@ -39,15 +37,21 @@ const App = () => {
 
       <Categories title='Originales de PlatziVideo'>
         <Carousel>
-          {initialState.originals.map(video => (
+          {originals.map(video => (
             <CarouselItem {...video} key={video.id} />
           ))}
         </Carousel>
       </Categories>
-
-      <Footer />
     </div>
   )
 }
 
-export default App
+const mapStateToProps = state => {
+  return {
+    myList: state.myList,
+    trends: state.trends,
+    originals: state.originals,
+  }
+}
+
+export default connect(mapStateToProps, null)(Home)
