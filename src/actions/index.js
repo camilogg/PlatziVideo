@@ -27,3 +27,8 @@ export const getVideoSoruce = payload => ({
   type: 'GET_VIDEO_SOURCE',
   payload,
 })
+
+export const searchFilter = payload => ({
+  type: 'SEARCH_FILTER',
+  payload,
+})

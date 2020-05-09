@@ -11,11 +11,21 @@ import '../assets/styles/App.scss'
 
 // const API = 'http://localhost:3000/initialState/'
 
-const Home = ({ myList, trends, originals }) => {
+const Home = ({ myList, trends, originals, search }) => {
   // const initialState = useInitialState(API)
   return (
     <div className='app'>
       <Search isHome />
+
+      {search.length > 0 && (
+        <Categories title='Búsqueda'>
+          <Carousel>
+            {search.map(video => (
+              <CarouselItem {...video} key={video.id} />
+            ))}
+          </Carousel>
+        </Categories>
+      )}
 
       {myList.length > 0 && (
         <Categories title='Mi lista'>
@@ -51,6 +61,7 @@ const mapStateToProps = state => {
     myList: state.myList,
     trends: state.trends,
     originals: state.originals,
+    search: state.search,
   }
 }
 

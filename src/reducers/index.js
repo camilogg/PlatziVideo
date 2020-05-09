@@ -1,12 +1,11 @@
 const reducer = (state, action) => {
   switch (action.type) {
     case 'SET_FAVORITE':
-      return state.myList.find(item => item.id === action.payload.id)
-        ? { ...state }
-        : {
-            ...state,
-            myList: [...state.myList, action.payload],
-          }
+      return state.myList.find(item => item.id === action.payload.id) ?
+        { ...state } : {
+          ...state,
+          myList: [...state.myList, action.payload],
+        }
     case 'DELETE_FAVORITE':
       return {
         ...state,
@@ -35,6 +34,14 @@ const reducer = (state, action) => {
           state.originals.find(item => item.id === Number(action.payload)) ||
           [],
       }
+    case 'SEARCH_FILTER':
+      return action.payload === '' ?
+        { ...state, search: [] } : {
+          ...state,
+          search: state.trends.concat(state.originals).filter(item => {
+            return item.title.toLowerCase().includes(action.payload.toLowerCase())
+          }),
+        }
     default:
       return state
   }

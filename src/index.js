@@ -10,6 +10,7 @@ const initialState = {
   user: {},
   playing: {},
   myList: [],
+  search: [],
   trends: [
     {
       id: 2,
